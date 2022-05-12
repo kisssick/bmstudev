@@ -1,0 +1,7 @@
+Executable : /Users/david/Library/Android/sdk/cmake/3.18.1/bin/ninja
+arguments : 
+-C
+/Users/david/Desktop/javadev/bmstu_DevPO/app/.cxx/Debug/486e4u3y/x86_64
+myapplication
+jvmArgs : 
+

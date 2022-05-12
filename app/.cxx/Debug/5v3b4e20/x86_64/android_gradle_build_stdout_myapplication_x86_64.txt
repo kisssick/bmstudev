@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/david/Desktop/softwaredev/bmstu_softwareDev/app/.cxx/Debug/5v3b4e20/x86_64'
+ninja: no work to do.

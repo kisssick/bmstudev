@@ -18,19 +18,20 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         native-lib.cpp)
 
+MESSAGE(${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/spdlog/spdlog/include)
 target_include_directories(myapplication PUBLIC
-        C:/Users/kuzya/AndroidStudioProjects/MyApplication2/app/libs/spdlog/spdlog/include
-        C:/Users/kuzya/AndroidStudioProjects/MyApplication2/app/libs/mbedtls/mbedtls/mbedtls/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/spdlog/spdlog/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/mbedtls/mbedtls/mbedtls/include
         )
 
 add_library(spdlog STATIC IMPORTED)
 message(${ANDROID_ABI})
 set_target_properties(spdlog PROPERTIES IMPORTED_LOCATION
-        C:/Users/kuzya/AndroidStudioProjects/MyApplication2/app/libs/spdlog/build/x86_64/libspdlog.a)
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/spdlog/build/x86_64/libspdlog.a)
 
 add_library(mbedcrypto SHARED IMPORTED)
 set_target_properties(mbedcrypto PROPERTIES IMPORTED_LOCATION
-        C:/Users/kuzya/AndroidStudioProjects/MyApplication2/app/libs/mbedtls/mbedtls/build/x86_64/library/libmbedcrypto.so)
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../../libs/mbedtls/mbedtls/build/x86_64/library/libmbedcrypto.so)
 
 
 find_library( # Sets the name of the path variable.

@@ -1,0 +1,7 @@
+# ninja log v5
+0	6376	1648640806	CMakeFiles/myapplication.dir/native-lib.cpp.o	4eb2ec539a98287a
+6378	6678	1648640806	/Users/david/Desktop/javadev/bmstu_DevPO/app/build/intermediates/cxx/Debug/486e4u3y/obj/x86_64/libmyapplication.so	e7cb352c26264c20
+4	4289	1648641411	CMakeFiles/myapplication.dir/native-lib.cpp.o	4eb2ec539a98287a
+4289	4512	1648641411	/Users/david/Desktop/javadev/bmstu_DevPO/app/build/intermediates/cxx/Debug/486e4u3y/obj/x86_64/libmyapplication.so	e7cb352c26264c20
+3	5276	1650397268	CMakeFiles/myapplication.dir/native-lib.cpp.o	4eb2ec539a98287a
+5276	5541	1650397268	/Users/david/Desktop/javadev/bmstu_DevPO/app/build/intermediates/cxx/Debug/486e4u3y/obj/x86_64/libmyapplication.so	e7cb352c26264c20

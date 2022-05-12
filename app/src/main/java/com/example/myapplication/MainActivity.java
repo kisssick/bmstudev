@@ -4,69 +4,107 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Toast;
 
-import com.example.myapplication.databinding.ActivityMainBinding;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import android.app.Activity;
+import android.content.Intent;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TransactionEvents {
 
-    // Used to load the 'myapplication' library on application startup.
+    ActivityResultLauncher<Intent> activityResultLauncher;
+
     static {
         System.loadLibrary("myapplication");
         System.loadLibrary("mbedcrypto");
     }
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        pin = data.getStringExtra("pin");
+                        synchronized (MainActivity.this) {
+                            MainActivity.this.notifyAll();
+                        }
+                    }
+                });
 
-        int res = initRing();
-        byte[] v = randomBytes(10);
+        int res = initRng();
+        byte[] rnd = randomBytes(10);
+    }
 
-        byte[] key =
-                stringToHex("0123456789ABCDEF0123456789ABCDE0");
-        byte[] enc = encrypt(key,
-                stringToHex("000000000000000102"));
-        byte[] dec = decrypt(key, enc);
-        String s = new String(Hex.encodeHex(dec)).toUpperCase();
-        Log.i("DEC: ", s);
+    public void onButtonClick(View view) {
+//        new Thread(() -> {
+//            try {
+//                byte[] trd = stringToHex("9F0206000000000100");
+//                transaction(trd);
+//            } catch (Exception exception) {
+//                Log.println(Log.ERROR, "MtLog", Arrays.toString(exception.getStackTrace()));
+//            }
+//        }).start();
+        byte[] trd = stringToHex("9F0206000000000100");
+        transaction(trd);
+    }
 
-        // Example of a call to a native method
-        TextView tv = binding.sampleText;
-        tv.setText(stringFromJNI());
+    private String pin;
+
+    @Override
+    public String enterPin(int ptc, String amount) {
+        pin = new String();
+
+        Intent intent = new Intent(MainActivity.this, PinpadActivity.class);
+        intent.putExtra("ptc", ptc);
+        intent.putExtra("amount", amount);
+
+        synchronized (MainActivity.this) {
+            activityResultLauncher.launch(intent);
+            try {
+                MainActivity.this.wait();
+            } catch (Exception exception) {
+                Log.println(Log.ERROR, "MtLog", exception.getMessage());
+            }
+        }
+
+        return pin;
+    }
+    @Override
+    public void transactionResult(boolean result) {
+        runOnUiThread(() -> {
+            Toast.makeText(MainActivity.this, result ? "ok" : "failed", Toast.LENGTH_SHORT).show();
+        });
     }
 
 
-    public static byte[] stringToHex(String s)
-    {
+    public static byte[] stringToHex(String s) {
         byte[] hex;
-        try
-        {
+        try {
             hex = Hex.decodeHex(s.toCharArray());
-        }
-        catch (DecoderException ex)
-        {
+        } catch (DecoderException ex) {
             hex = null;
         }
         return hex;
     }
 
-    /**
-     * A native method that is implemented by the 'myapplication' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
-    public native int initRing();
+    public static native int initRng();
+
     public static native byte[] randomBytes(int no);
+
     public static native byte[] encrypt(byte[] key, byte[] data);
+
     public static native byte[] decrypt(byte[] key, byte[] data);
+
+    public native boolean transaction(byte[] trd);
 
 }

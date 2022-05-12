@@ -1,0 +1,40 @@
+{
+  "buildFiles": [
+    "/Users/david/Desktop/javadev/bmstu_DevPO/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/david/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/david/Desktop/javadev/bmstu_DevPO/app/.cxx/Debug/486e4u3y/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/david/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/david/Desktop/javadev/bmstu_DevPO/app/.cxx/Debug/486e4u3y/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "myapplication::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86_64",
+      "artifactName": "myapplication",
+      "output": "/Users/david/Desktop/javadev/bmstu_DevPO/app/build/intermediates/cxx/Debug/486e4u3y/obj/x86_64/libmyapplication.so",
+      "runtimeFiles": [
+        "/Users/david/Desktop/javadev/bmstu_DevPO/app/libs/mbedtls/mbedtls/build/x86_64/library/libmbedcrypto.so"
+      ]
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/david/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang",
+      "cppCompilerExecutable": "/Users/david/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}
