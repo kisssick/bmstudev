@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")
 public class LoginController {
@@ -52,7 +52,8 @@ public class LoginController {
 
                     // Сохраняем информацию (save просто записывает, flush применяет все изменения)
                     Users u3 = usersRepository.saveAndFlush(u2);
-                    return new ResponseEntity<Object>(token, HttpStatus.OK);
+
+                    return new ResponseEntity<Object>(u3, HttpStatus.OK);
                 }
             }
         }
