@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
 
 
     protected String getPageTitle(String html) {
-        Pattern pattern = Pattern.compile("<title>(.+?)</title>", Pattern.DOTALL);
+        Pattern pattern = Pattern.compile("<title>(.+)</title>", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(html);
         String p;
         if (matcher.find())
