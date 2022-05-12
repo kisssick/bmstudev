@@ -35,7 +35,7 @@ public class Museum {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "usermuseums", joinColumns = @JoinColumn(name = "museumid"), inverseJoinColumns = @JoinColumn(name = "userid"))
-    public Set<User> users = new HashSet<>();
+    public Set<Users> users = new HashSet<>();
 
 
 }
