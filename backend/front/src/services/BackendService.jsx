@@ -12,7 +12,7 @@ class BackendService {
 
     /* Countries */
     retrieveAllCountries(page, limit) {
-        return axios.get(`${API_URL}/countries`, {headers: { Authorization: Utils.getToken() } });
+        return axios.get(`${API_URL}/countries?page=${page}&limit=${limit}`, {headers: { Authorization: Utils.getToken() } });
     }
     retrieveCountry(id) {
         return axios.get(`${API_URL}/countries/${id}`, {headers: { Authorization: Utils.getToken() } });
@@ -25,6 +25,13 @@ class BackendService {
     }
     deleteCountries(countries) {
         return axios.post(`${API_URL}/deletecountries`, countries, {headers: { Authorization: Utils.getToken() } });
+    }
+    /* User */
+    retrieveUser(id) {
+        return axios.get(`${API_URL}/users/${id}`, {headers: { Authorization: Utils.getToken() } });
+    }
+    updateUser(user) {
+        return axios.put(`${API_URL}/users/${user.id}`, user, {headers: { Authorization: Utils.getToken() } });
     }
 
 }

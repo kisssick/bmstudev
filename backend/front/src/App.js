@@ -1,27 +1,26 @@
-import "./App.css"
-import React, {useState} from "react";
+import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Home from "./components/Home";
-import AnotherHome from "./components/AnotherHome";
-import Login from "./components/Login";
+import {connect} from "react-redux";
 import NavigationBar from "./components/NavigationBarClass";
-import { connect } from "react-redux";
-import Utils from "./Utils/Utils";
+import Home from "./components/Home";
+import Login from "./components/Login";
 import SideBar from "./components/SideBar";
 import CountryListComponent from "./components/CountryListComponent";
 import CountryComponent from "./components/CountryComponent";
+import Utils from "./Utils/Utils";
+import {useState} from "react";
+import MyAccountComponent from "./components/MyAccountComponent";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({children}) => {
     let user = Utils.getUser();
     return user ? children : <Navigate to={'/login'} />
 }
 function App(props) {
     const [exp, setExpanded] = useState(true);
-
     return (
         <div className="App">
             <BrowserRouter>
-                <NavigationBar toggleSideBar={() => setExpanded(!exp)} />
+                <NavigationBar toggleSideBar={() => setExpanded(!exp)}/>
                 <div className="wrapper">
                     <SideBar expanded={exp} />
                     <div className="container-fluid">
@@ -30,9 +29,10 @@ function App(props) {
                         }
                         <Routes>
                             <Route path="login" element={<Login />} />
-                            <Route path="home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-                            <Route path="countries" element={<ProtectedRoute><CountryListComponent /></ProtectedRoute>} />
-                            <Route path="countries/:id" element={<ProtectedRoute><CountryComponent /></ProtectedRoute>} />
+                            <Route path="home" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+                            <Route path="countries" element={<ProtectedRoute><CountryListComponent/></ProtectedRoute>}/>
+                            <Route path="countries/:id" element={<ProtectedRoute><CountryComponent /></ProtectedRoute>}/>
+                            <Route path="account" element={<ProtectedRoute><MyAccountComponent /></ProtectedRoute>} />
                         </Routes>
                     </div>
                 </div>

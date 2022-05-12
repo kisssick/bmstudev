@@ -51,6 +51,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@reduxjs/toolkit": "^1.8.1"
+    "@reduxjs/toolkit": "^1.8.1",
+    "react-hook-form": "^7.31.1"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faBars, faHome, faUser} from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, Link } from 'react-router-dom';
 import Utils from "../Utils/Utils";
 import { useDispatch, connect } from "react-redux";
@@ -33,14 +33,14 @@ const NavigationBar = (props) => {
                     onClick={props.toggleSideBar}>
                 <FontAwesomeIcon icon={faBars} />
             </button>
-            <Navbar.Brand>My RPO</Navbar.Brand>
+            <Navbar.Brand><FontAwesomeIcon icon={faHome} />{' '}My RPO</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     {/*<Nav.Link href={"\home"}>Home</Nav.Link>*/}
                     <Nav.Link as={Link} to="/home">Home</Nav.Link>
                     <Nav.Link onClick={goHome}>Another Home</Nav.Link>
-                    <Nav.Link onClick={goHome}>Yet Another Home</Nav.Link>
+                    <Nav.Link onClick={() => {navigate("account")}}>Account</Nav.Link>
                 </Nav>
                 <Navbar.Text>{uname}</Navbar.Text>
                 {props.user &&

@@ -1,17 +1,25 @@
 package com.example.backend.controllers;
 
-import com.example.backend.models.Artist;
-import com.example.backend.models.Country;
-import com.example.backend.repositories.CountryRepository;
-import com.example.backend.tools.DataValidationException;
+// Импортируем необходимые модули
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.backend.models.Artist;
+import com.example.backend.models.Country;
+import com.example.backend.repositories.CountryRepository;
+import com.example.backend.tools.DataValidationException;
+
 import java.util.*;
 
+/**
+ * Класс-контроллер таблицы "стран"
+ */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("api/v1")
@@ -30,18 +38,18 @@ public class CountryController {
 
     /**
      * Метод, который возвращает просто список стран
-     *
+     * 
      * @return - Список стран, которые есть в ьазе данных
      */
     @GetMapping("/countries")
-    public List getAllCountries() {
-        return countryRepository.findAll();
+    public Page<Country> getAllCountries(@RequestParam("page") int page, @RequestParam("limit") int limit) {
+        return countryRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC, "name")));
     }
 
     /**
      * Метод, который извлекает информацию из таблицы country, вместе с информацией
      * по конкретному artists
-     *
+     * 
      * @param countryID - ID страны
      * @return - Возвращает artists
      */
@@ -58,7 +66,7 @@ public class CountryController {
     /**
      * Метод, который добавляет country в таблиц
      * RequestBody - это наш экземпляр (через curl передаётся в виде JSON)
-     *
+     * 
      * @param country - наш экземпляр класса country
      * @return - статус (ОК/НЕ ОК)
      */
@@ -79,14 +87,14 @@ public class CountryController {
 
     /**
      * Метод, который обновляет данные в таблице
-     *
+     * 
      * @param countryID      - указываем id по которому будем обновлять данные
      * @param countryDetails - сводки по Country
      * @return - ОК/НЕ ОК
      */
     @PutMapping("/countries/{id}")
     public ResponseEntity<Country> updateCountry(@PathVariable(value = "id") Long countryId,
-                                                 @Validated @RequestBody Country countryDetails)
+            @Validated @RequestBody Country countryDetails)
             throws DataValidationException {
         try {
             Country country = countryRepository.findById(countryId)
@@ -111,7 +119,7 @@ public class CountryController {
 
     /**
      * Метод, который удаляет информацию из базы данных
-     *
+     * 
      * @param countryId - по какому ID-шнику удаляем информацию
      * @return - возвращает true, если удалено успешно, false - в противном случае
      */

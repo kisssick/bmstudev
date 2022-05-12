@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Класс, который использует пользователь
+ */
 @Entity
 @Table(name = "users")
 @Access(AccessType.FIELD)
@@ -26,6 +29,9 @@ public class Users {
     @Column(name = "password")
     public String password;
 
+    @Transient
+    public String np;
+
     // Поле - электронная почта
     @Column(name = "email")
     public String email;
@@ -36,6 +42,7 @@ public class Users {
     public String salt;
 
     // Поле - токен
+    
     @Column(name = "token")
     public String token;
 
@@ -51,15 +58,27 @@ public class Users {
 
     public Users() {}
 
+    /**
+     * Конструктор, который принимает в себя ID
+     * @param id - ID пользователя
+     */
     public Users(Long id) {
         this.id = id;
     }
 
+    /**
+     * Метод добавляет музей. По сути, он просто сокращает нам работу
+     * @param m - структура музея
+     */
     public void addMuseum(Museum m) {
         this.museums.add(m);
         m.users.add(this);
     }
 
+    /**
+     * Метод, который осуществляет удаления музея
+     * @param m - структура данных музея
+     */
     public void removeMuseum(Museum m) {
         this.museums.remove(m);
         m.users.remove(this);

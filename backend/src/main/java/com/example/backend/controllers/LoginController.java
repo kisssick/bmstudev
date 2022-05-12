@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+/**
+ * Класс - контроллер авторизации. Он не привязан к какой-либо модели, поэтому пишем его отдельно
+ */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/auth")
@@ -21,7 +25,11 @@ public class LoginController {
     @Autowired
     private UserRepository usersRepository;
 
-
+    /**
+     * Метод, который осуществляет авторизацию (sign in) пользователя.
+     * @param credentials
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody Map<String, String> credentials) {
         // В качестве JSON записываем логин, пароль. Логин - admin, пароль - qwerty
@@ -31,7 +39,6 @@ public class LoginController {
         if (!pwd.isEmpty() && !login.isEmpty()) {
             // Если логин и пароль не пусты, то ищем в БД пользователя с данным логином (логин уникальный)
             Optional<Users> uu = usersRepository.findByLogin(login);
-
             if (uu.isPresent()) {
                 // Если нашли пользователя, то извлекаем информацию о нём
                 Users u2 = uu.get();
@@ -52,7 +59,6 @@ public class LoginController {
 
                     // Сохраняем информацию (save просто записывает, flush применяет все изменения)
                     Users u3 = usersRepository.saveAndFlush(u2);
-
                     return new ResponseEntity<Object>(u3, HttpStatus.OK);
                 }
             }
@@ -62,8 +68,14 @@ public class LoginController {
         return new ResponseEntity<Object>(HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * Метод, который осуществляет sign out - выход из системы
+     * @param token - токен, который должен идти в заголовке
+     * @return - Статус. Ок/не ок
+     */
     @GetMapping("/logout")
     public ResponseEntity logout(@RequestHeader(value = "Authorization", required = false) String token) {
+        // Вот здесь была ошибка в методичке. Она исправлена
         if (token != null && !token.isEmpty()) {
             // Очищаем токен от всякого мусора
             token = StringUtils.removeStart(token, "Bearer").trim();
