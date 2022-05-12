@@ -205,3 +205,4 @@ Java_com_example_myapplication_MainActivity_initRng(JNIEnv *env, jclass) {
                                       strlen( personalization ) );
     }
 
+
